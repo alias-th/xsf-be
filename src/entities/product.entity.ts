@@ -17,7 +17,7 @@ export class Product {
   price: number;
 
   @Column({ type: "string" })
-  category: string;
+  category_id: string;
 
   @Column({ type: "int" })
   stock_quantity: number;

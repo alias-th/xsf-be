@@ -11,6 +11,9 @@ interface CreateProductBody {
   price: number;
 }
 
+// NOTE: This function handles adding a new product, including file uploads and database storage.
+// TODO: Should use transactions for atomicity.
+// TODO: Use streaming instead of buffering entire files in memory.
 const addProduct = async (
   request: FastifyRequest<{ Body: CreateProductBody }>,
   reply: FastifyReply
@@ -94,6 +97,10 @@ const addProduct = async (
   product.name = validatedFields.name as string;
   product.code = validatedFields.code as string;
   product.price = validatedFields.price as number;
+  product.description = (validatedFields.description as string) ?? "";
+  product.category_id = (validatedFields.category_id as string) ?? "";
+  product.stock_quantity = (validatedFields.stock_quantity as number) ?? 1;
+  product.is_popular = false;
   product.images = uploadedUrls;
   product.createdAt = new Date();
   product.updatedAt = new Date();
@@ -108,7 +115,7 @@ const addProduct = async (
 
   // Respond with success
   reply
-    .code(200)
+    .code(201)
     .send({ message: "Create product successfully.", files: uploadedUrls });
 };
 

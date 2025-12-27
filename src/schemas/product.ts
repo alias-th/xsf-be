@@ -21,7 +21,7 @@ export const create = Joi.object().keys({
     "string.empty": "description is required.",
     "any.required": "description is required.",
   }),
-  categoryId: Joi.string().optional().messages({
+  category_id: Joi.string().optional().messages({
     "string.empty": "category is required.",
     "any.required": "category is required.",
   }),
