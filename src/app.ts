@@ -2,8 +2,10 @@ import Fastify from "fastify";
 import cors from "@fastify/cors";
 import fastifyEnv from "@fastify/env";
 import productRoute from "./routes/product";
+import categoryRoute from "./routes/category";
 import multipart from "@fastify/multipart";
 import s3Storage from "./plugins/s3-storage";
+import dealRoute from "./routes/deal";
 
 const envOptions = {
   dotenv: true,
@@ -72,6 +74,8 @@ async function buildApp() {
   // Register routes
   const apiVersion = "/v1";
   fastify.register(productRoute, { prefix: `${apiVersion}/products` });
+  fastify.register(categoryRoute, { prefix: `${apiVersion}/categories` });
+  fastify.register(dealRoute, { prefix: `${apiVersion}/deals` });
 
   // Set error handlers
   fastify.setErrorHandler(async function (error: any, request, reply) {

@@ -36,3 +36,22 @@ export const create = Joi.object().keys({
     "any.required": "is_popular is required.",
   }),
 });
+
+export const update = Joi.object().keys({
+  name: Joi.string().required().messages({
+    "string.empty": "product name is required.",
+    "any.required": "product name is required.",
+  }),
+
+  code: Joi.string().min(6).required().messages({
+    "string.empty": "code is required.",
+    "any.required": "code is required.",
+    "string.min": "code must be at least 6 characters.",
+  }),
+
+  price: Joi.number().positive().required().messages({
+    "number.base": "price must be a number.",
+    "number.positive": "price must be a positive number.",
+    "any.required": "price is required.",
+  }),
+});
