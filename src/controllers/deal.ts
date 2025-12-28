@@ -41,7 +41,9 @@ export const create = async (
   newDeal.name = name;
   newDeal.description = description;
   newDeal.discount_percentage = discount_percentage;
-  newDeal.product_ids = product_ids;
+  newDeal.product_ids = product_ids.map((id) => {
+    return new ObjectId(id);
+  });
 
   // Save the new deal
   try {
@@ -99,7 +101,7 @@ export const getExclusiveDeals = async (
       ...deal,
       product_ids: undefined,
       products: products.filter((product) => {
-        return deal.product_ids.includes(product.id.toString());
+        return deal.product_ids.includes(product.id);
       }),
     };
   });

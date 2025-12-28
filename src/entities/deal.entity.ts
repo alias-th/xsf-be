@@ -6,7 +6,7 @@ export class Deal {
   id: ObjectId;
 
   @Column({ type: "array" })
-  product_ids: string[];
+  product_ids: ObjectId[];
 
   @Column({ type: "string" })
   name: string;

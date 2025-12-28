@@ -6,6 +6,7 @@ import { Product } from "../entities/product.entity";
 import { appDataSource } from "../datasource";
 import { ProductPopularity } from "../entities/product_popularity.entity";
 import { ObjectId } from "mongodb";
+import { Deal } from "../entities/deal.entity";
 
 interface CreateProductReq {
   name: string;
@@ -57,6 +58,22 @@ const addProduct = async (
     return;
   }
 
+  // Validate code
+  try {
+    const product = await appDataSource.getMongoRepository(Product).findOne({
+      where: {
+        code: validatedFields.code,
+      },
+    });
+    if (product) {
+      reply.code(400).send({ error: "duplicate code." });
+      return;
+    }
+  } catch (error) {
+    reply.code(500).send({ error: "Internal server error." });
+    return;
+  }
+
   // Validate files
   if (files.length === 0) {
     reply.code(400).send({ error: "At least one file is required." });
@@ -99,7 +116,10 @@ const addProduct = async (
   product.name = validatedFields.name as string;
   product.code = validatedFields.code as string;
   product.description = (validatedFields.description as string) ?? "";
-  product.category_id = (validatedFields.category_id as string) ?? "";
+
+  const categoryID = new ObjectId(validatedFields.category_id);
+  product.category_id = categoryID;
+
   product.stock_quantity = (validatedFields.stock_quantity as number) ?? 1;
   product.pricing = {
     price_per_unit: (validatedFields.price as number) ?? 0,
@@ -144,12 +164,20 @@ const getProductById = async (
   }
   const productId = new ObjectId(id);
   const productRepository = appDataSource.getMongoRepository(Product);
+  const dealRepository = appDataSource.getMongoRepository(Deal);
   const productPopularityRepository =
     appDataSource.getMongoRepository(ProductPopularity);
 
   let product: Product | null;
+  let deals: Deal[] = [];
   try {
     product = await productRepository.findOne({ where: { _id: productId } });
+    deals = await dealRepository.find({
+      where: {
+        product_ids: product?.id,
+      },
+    });
+
     if (!product) {
       reply.code(404).send({ error: "Product not found." });
       return;
@@ -166,11 +194,18 @@ const getProductById = async (
     return;
   }
 
-  reply.code(200).send({ ...product });
+  reply.code(200).send({
+    ...product,
+    deal: deals.map((item) => {
+      return { ...item, product_ids: undefined };
+    }),
+  });
 };
 
 const getAllProducts = async (request: FastifyRequest, reply: FastifyReply) => {
   const productRepository = appDataSource.getMongoRepository(Product);
+  const dealRepository = appDataSource.getMongoRepository(Deal);
+
   const query = request.query as {
     page?: string;
     limit?: string;
@@ -183,6 +218,7 @@ const getAllProducts = async (request: FastifyRequest, reply: FastifyReply) => {
   const sortBy = query.sortBy || "createdAt";
 
   try {
+    const deals = await dealRepository.find();
     const [products, totalCount] = await productRepository.findAndCount({
       order: {
         [sortBy]: "DESC",
@@ -193,8 +229,27 @@ const getAllProducts = async (request: FastifyRequest, reply: FastifyReply) => {
 
     const totalPages = Math.ceil(totalCount / limit);
 
+    const productsWithDeal = products.map((product) => {
+      const activeDeal = deals
+        .filter((deal) => {
+          return deal.product_ids
+            .map((i) => i.toString())
+            .includes(product.id.toString());
+        })
+        .map((deal) => {
+          return {
+            id: deal.id,
+            name: deal.name,
+            description: deal.description,
+            discount_percentage: deal.discount_percentage,
+          };
+        });
+
+      return { ...product, deal: activeDeal };
+    });
+
     reply.code(200).send({
-      data: products,
+      data: productsWithDeal,
       pagination: {
         total_items: totalCount,
         total_pages: totalPages,
