@@ -1,0 +1,55 @@
+[
+  {
+    "_id": "658af2b2c3d4e5f6a7b8c001",
+    "name": "Oak Heritage Plank",
+    "code": "WD-OAK-001",
+    "description": "Premium solid oak wood flooring with a natural matte finish.",
+    "category_id": "658af1b2c3d4e5f6a7b8c9d7",
+    "stock_quantity": 450,
+    "images": [
+      "https://pub-8aa8b480403f4da0bac5a9e73a4cf84c.r2.dev/placeholder-1.png",
+      "https://pub-8aa8b480403f4da0bac5a9e73a4cf84c.r2.dev/placeholder-2.png",
+      "https://pub-8aa8b480403f4da0bac5a9e73a4cf84c.r2.dev/placeholder-3.png"
+    ],
+    "pricing": {
+      "price_per_unit": 100,
+      "unit_label": "sqm"
+    },
+    "createdAt": "2024-01-15T08:30:00.000Z",
+    "updatedAt": "2024-01-15T08:30:00.000Z"
+  },
+  {
+    "_id": "658af2b2c3d4e5f6a7b8c002",
+    "name": "Arctic White Marble",
+    "code": "ST-MAR-002",
+    "description": "Polished white marble stone tile with subtle grey veining.",
+    "category_id": "658af1b2c3d4e5f6a7b8c9d7",
+    "stock_quantity": 120,
+    "images": [
+      "https://pub-8aa8b480403f4da0bac5a9e73a4cf84c.r2.dev/placeholder-1.png"
+    ],
+    "pricing": {
+      "price_per_unit": 200,
+      "unit_label": "tile"
+    },
+    "createdAt": "2024-02-01T10:15:00.000Z",
+    "updatedAt": "2024-02-10T14:20:00.000Z"
+  },
+  {
+    "_id": "658af2b2c3d4e5f6a7b8c003",
+    "name": "Ultra-Tough Grey Laminate",
+    "code": "LM-GRY-003",
+    "description": "Scratch-resistant laminate flooring ideal for high-traffic commercial areas.",
+    "category_id": "658af1b2c3d4e5f6a7b8c9d7",
+    "stock_quantity": 1200,
+    "images": [
+      "https://pub-8aa8b480403f4da0bac5a9e73a4cf84c.r2.dev/placeholder-1.png"
+    ],
+    "pricing": {
+      "price_per_unit": 300,
+      "unit_label": "sqft"
+    },
+    "createdAt": "2024-03-05T09:00:00.000Z",
+    "updatedAt": "2024-03-05T09:00:00.000Z"
+  }
+]

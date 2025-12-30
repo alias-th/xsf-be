@@ -1,0 +1,42 @@
+[
+  {
+    "_id": "658af1b2c3d4e5f6a7b8c9d0",
+    "name": "Laminate",
+    "description": "Multi-layer synthetic flooring fused together with a lamination process."
+  },
+  {
+    "_id": "658af1b2c3d4e5f6a7b8c9d1",
+    "name": "Tile",
+    "description": "Durable ceramic or porcelain slabs used for flooring and wall coverings."
+  },
+  {
+    "_id": "658af1b2c3d4e5f6a7b8c9d2",
+    "name": "Stone",
+    "description": "Natural rock materials including granite, marble, and slate for premium surfaces."
+  },
+  {
+    "_id": "658af1b2c3d4e5f6a7b8c9d3",
+    "name": "Wood",
+    "description": "Solid or engineered timber planks providing a classic, warm aesthetic."
+  },
+  {
+    "_id": "658af1b2c3d4e5f6a7b8c9d4",
+    "name": "Mirror",
+    "description": "Reflective glass surfaces used for decorative wall panels and architectural accents."
+  },
+  {
+    "_id": "658af1b2c3d4e5f6a7b8c9d5",
+    "name": "WPC",
+    "description": "Wood Plastic Composite flooring known for being 100% waterproof and highly durable."
+  },
+  {
+    "_id": "658af1b2c3d4e5f6a7b8c9d6",
+    "name": "Metal",
+    "description": "Industrial-grade metallic finishes and panels for modern structural or decorative use."
+  },
+  {
+    "_id": "658af1b2c3d4e5f6a7b8c9d7",
+    "name": "No Category",
+    "description": "Unclassified items or materials pending categorization."
+  }
+]

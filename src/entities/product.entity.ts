@@ -24,9 +24,6 @@ export class Product {
   @Column({ type: "string" })
   description: string;
 
-  @Column({ type: "double" })
-  price: number;
-
   @Column({ type: "string" })
   category_id: ObjectId;
 
@@ -44,20 +41,4 @@ export class Product {
 
   @Column({ type: "date" })
   updatedAt: Date;
-
-  // toJSON() {
-  //   return {
-  //     id: this.id.toString(),
-  //     name: this.name,
-  //     code: this.code,
-  //     description: this.description,
-  //     price: this.price,
-  //     category_id: this.category_id,
-  //     stock_quantity: this.stock_quantity,
-  //     images: this.images,
-  //     pricing: this.pricing,
-  //     createdAt: this.createdAt,
-  //     updatedAt: this.updatedAt,
-  //   };
-  // }
 }

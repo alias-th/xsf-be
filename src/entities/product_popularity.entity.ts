@@ -10,12 +10,4 @@ export class ProductPopularity {
 
   @Column({ type: "int" })
   view_count: number;
-
-  // toJSON() {
-  //   return {
-  //     id: this.id.toString(),
-  //     product_id: this.product_id.toString(),
-  //     view_count: this.view_count,
-  //   };
-  // }
 }
