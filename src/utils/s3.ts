@@ -2,9 +2,9 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import fsPromise from "fs/promises";
 import fs from "fs";
 import path from "path";
-import { pipeline } from "stream/promises";
 import { v4 as uuidv4 } from "uuid";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import mime from "mime-types";
 
 const unlinkLocalFiles = async (opt: { filepaths: string[] }) => {
   for (const filepath of opt.filepaths) {
@@ -54,10 +54,13 @@ const uploadToS3 = async (
       path.join(process.cwd(), "uploads", filepath)
     );
 
+    const contentType = mime.lookup(filepath) || "application/octet-stream";
+
     const uploadParams = {
       Bucket: opt.bucketName,
       Key: filepath,
       Body: fileStream,
+      ContentType: contentType,
     };
 
     try {

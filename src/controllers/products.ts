@@ -13,10 +13,7 @@ interface CreateProductReq {
   code: string;
   price: number;
 }
-
-// NOTE: This function handles adding a new product, including file uploads and database storage.
-// TODO: Should use transactions for atomicity.
-// TODO: Use streaming instead of buffering entire files in memory.
+const NO_CATEGORY_ID = "64a7b8f5e4b0f5d3c4a1e9b0"; // Example ObjectId for no category
 const addProduct = async (
   request: FastifyRequest<{ Body: CreateProductReq }>,
   reply: FastifyReply
@@ -66,7 +63,7 @@ const addProduct = async (
       },
     });
     if (product) {
-      reply.code(400).send({ error: "duplicate code." });
+      reply.code(400).send({ error: "Duplicate category code." });
       return;
     }
   } catch (error) {
@@ -117,7 +114,9 @@ const addProduct = async (
   product.code = validatedFields.code as string;
   product.description = (validatedFields.description as string) ?? "";
 
-  const categoryID = new ObjectId(validatedFields.category_id);
+  const categoryID = new ObjectId(
+    validatedFields.category_id || NO_CATEGORY_ID
+  );
   product.category_id = categoryID;
 
   product.stock_quantity = (validatedFields.stock_quantity as number) ?? 1;
