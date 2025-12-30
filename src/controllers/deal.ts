@@ -67,9 +67,9 @@ export const getExclusiveDeals = async (
   const productRepository = appDataSource.getMongoRepository(Product);
 
   // getting deals
-  let deals: Deal[] = [];
+  let deal: Deal[] = [];
   try {
-    deals = await dealRepository.find({
+    deal = await dealRepository.find({
       where: { name: "xclusive-deal" },
       take: limit ? parseInt(limit) : 10,
     });
@@ -79,10 +79,13 @@ export const getExclusiveDeals = async (
   }
 
   // applying new format
-  const allProductIds = deals.flatMap((deal) => deal.product_ids);
+  const allProductIds = deal.flatMap((deal) => deal.product_ids);
   const uniqueProductIds = Array.from(new Set(allProductIds)).flatMap(
     (id) => new ObjectId(id)
   );
+  const uniqueProductIdsStrings = uniqueProductIds.map((id) => id.toString());
+
+  request.log.info({ uniqueProductIds }, "Unique product IDs for deals");
 
   // getting products
   let products: Product[] = [];
@@ -90,21 +93,22 @@ export const getExclusiveDeals = async (
     products = await productRepository.find({
       where: { _id: { $in: uniqueProductIds } },
     });
+    request.log.info({ products }, "[ Debug ] Fetched products for deals");
   } catch (error) {
     request.log.error({ error }, "Error fetching products for deals");
     return reply.status(500).send({ error: "Internal server error." });
   }
 
   // formatting result
-  const result = deals.map((deal) => {
+  const result = deal.map((deal) => {
     return {
       ...deal,
       product_ids: undefined,
       products: products.filter((product) => {
-        return deal.product_ids.includes(product.id);
+        return uniqueProductIdsStrings.includes(product.id.toString());
       }),
     };
   });
 
-  return reply.status(201).send({ data: result });
+  return reply.status(200).send({ data: result });
 };

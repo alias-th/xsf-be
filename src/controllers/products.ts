@@ -149,7 +149,12 @@ const addProduct = async (
   }
 
   // Respond with success
-  reply.code(201).send({ message: "Create product successfully." });
+  reply.code(201).send({
+    message: "Create product successfully.",
+    data: {
+      id: product.id,
+    },
+  });
 };
 
 const getProductById = async (

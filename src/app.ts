@@ -72,7 +72,7 @@ async function buildApp() {
   });
 
   // Register routes
-  const apiVersion = "/v1";
+  const apiVersion = "/api/v1";
   fastify.register(productRoute, { prefix: `${apiVersion}/products` });
   fastify.register(categoryRoute, { prefix: `${apiVersion}/categories` });
   fastify.register(dealRoute, { prefix: `${apiVersion}/deals` });

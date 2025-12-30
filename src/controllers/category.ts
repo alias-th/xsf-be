@@ -24,5 +24,10 @@ export const create = async (
     return;
   }
 
-  reply.code(201).send({ message: "Create category successfully." });
+  reply.code(201).send({
+    message: "Create category successfully.",
+    data: {
+      id: newCategory.id,
+    },
+  });
 };
