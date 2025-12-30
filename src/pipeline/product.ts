@@ -32,12 +32,12 @@ export const getAllProductsV2 = (query: {
         as: "category",
       },
     },
-    // {
-    //   $unwind: {
-    //     path: "$view",
-    //     preserveNullAndEmptyArrays: true,
-    //   },
-    // },
+    {
+      $unwind: {
+        path: "$view",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
     // {
     //   $unwind: {
     //     path: "$category",
@@ -52,7 +52,8 @@ export const getAllProductsV2 = (query: {
     // },
     {
       $project: {
-        _id: 1,
+        id: "$_id",
+        _id: 0,
         name: 1,
         code: 1,
         description: 1,
@@ -61,11 +62,13 @@ export const getAllProductsV2 = (query: {
         pricing: 1,
         view: "$view.view_count",
         category: {
+          id: { $arrayElemAt: ["$category._id", 0] },
           name: 1,
           description: 1,
           imageUrl: 1,
         },
         deal: {
+          id: { $arrayElemAt: ["$deal._id", 0] },
           name: 1,
           description: 1,
           discount_percentage: 1,
