@@ -3,6 +3,7 @@ import { appDataSource } from "../datasource";
 import { Product } from "../entities/product.entity";
 import { ObjectId } from "mongodb";
 import { Deal } from "../entities/deal.entity";
+import * as dealPipeline from "../pipeline/deal";
 
 interface CreateDealReq {
   name: string;
@@ -54,6 +55,30 @@ export const create = async (
   }
 
   return reply.status(201).send({ message: "Create deal successfully." });
+};
+
+export const getExclusiveDealsV2 = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  const dealRepository = appDataSource.getMongoRepository(Deal);
+  try {
+    const products = await dealRepository
+      .aggregate(dealPipeline.getExclusiveDealsV2)
+      .toArray();
+    const newProducts = [];
+    for (const product of products) {
+      newProducts.push(product);
+    }
+    const response = {
+      ...newProducts[0].deal,
+      products: newProducts,
+    };
+    return reply.status(200).send({ data: response });
+  } catch (error) {
+    request.log.error({ error }, "Error fetching exclusive deals");
+    reply.status(500).send({ error: "Internal server error." });
+  }
 };
 
 export const getExclusiveDeals = async (
