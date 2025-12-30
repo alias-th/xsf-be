@@ -5,7 +5,7 @@ import * as productSchema from "../schemas/product";
 import Joi from "joi";
 
 const productRoutes = async function (fastify: FastifyInstance) {
-  fastify.get("/", productController.getAllProducts);
+  fastify.get("/", productController.getAllProductsV2);
   fastify.get("/:id", productController.getProductById);
   fastify.get("/popularity", productPopularityController.getProductPopularity);
   fastify.get("/search", productController.searchProducts);

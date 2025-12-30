@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { saveUploadedFile, uploadToS3 } from "../utils/s3";
 import * as productSchema from "../schemas/product";
 import * as fileSchema from "../schemas/file";
+import * as Pipelines from "../pipeline/product";
 import { Product } from "../entities/product.entity";
 import { appDataSource } from "../datasource";
 import { ProductPopularity } from "../entities/product_popularity.entity";
@@ -115,7 +116,7 @@ const addProduct = async (
   product.description = (validatedFields.description as string) ?? "";
 
   const categoryID = new ObjectId(
-    validatedFields.category_id || NO_CATEGORY_ID
+    (validatedFields.category_id as string) || NO_CATEGORY_ID
   );
   product.category_id = categoryID;
 
@@ -204,6 +205,46 @@ const getProductById = async (
       return { ...item, product_ids: undefined };
     }),
   });
+};
+
+const getAllProductsV2 = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  const query = request.query as {
+    page?: string;
+    limit?: string;
+    sortBy?: string;
+    order?: "ASC" | "DESC";
+  };
+
+  const page = parseInt(query.page || "1");
+  const limit = parseInt(query.limit || "10");
+
+  const productRepository = appDataSource.getMongoRepository(Product);
+  const aggregateFunc = Pipelines.getAllProductsV2({ ...query, page, limit });
+
+  try {
+    const [result] = await productRepository.aggregate(aggregateFunc).toArray();
+
+    const totalCount = result.metadata[0]?.total || 0;
+    const totalPages = Math.ceil(totalCount / limit);
+
+    reply.code(200).send({
+      data: result.data,
+      pagination: {
+        total_items: totalCount,
+        total_pages: totalPages,
+        current_page: page,
+        per_page: limit,
+        has_next_page: page < totalPages,
+        has_previous_page: page > 1,
+      },
+    });
+  } catch (error) {
+    request.log.error(error);
+    reply.code(500).send({ error: "Internal server error" });
+  }
 };
 
 const getAllProducts = async (request: FastifyRequest, reply: FastifyReply) => {
@@ -391,6 +432,7 @@ export {
   addProduct,
   getProductById,
   getAllProducts,
+  getAllProductsV2,
   updateProduct,
   deleteProduct,
   searchProducts,

@@ -62,7 +62,7 @@ export const getProductPopularity = async (
       ])
       .toArray();
 
-    return reply.status(200).send(result);
+    return reply.status(200).send({ data: result });
   } catch (error) {
     request.log.error(error);
     return reply.status(500).send({ message: "Internal Server Error" });
