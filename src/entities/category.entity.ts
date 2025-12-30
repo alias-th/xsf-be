@@ -10,4 +10,7 @@ export class Category {
 
   @Column({ type: "string" })
   description: string;
+
+  @Column({ type: "string", nullable: true })
+  imageUrl?: string;
 }

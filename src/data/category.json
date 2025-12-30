@@ -2,41 +2,49 @@
   {
     "_id": "658af1b2c3d4e5f6a7b8c9d0",
     "name": "Laminate",
-    "description": "Multi-layer synthetic flooring fused together with a lamination process."
+    "description": "Multi-layer synthetic flooring fused together with a lamination process.",
+    "imageUrl": "https://pub-8aa8b480403f4da0bac5a9e73a4cf84c.r2.dev/laminate.jpg"
   },
   {
     "_id": "658af1b2c3d4e5f6a7b8c9d1",
     "name": "Tile",
-    "description": "Durable ceramic or porcelain slabs used for flooring and wall coverings."
+    "description": "Durable ceramic or porcelain slabs used for flooring and wall coverings.",
+    "imageUrl": "https://pub-8aa8b480403f4da0bac5a9e73a4cf84c.r2.dev/tile.jpg"
   },
   {
     "_id": "658af1b2c3d4e5f6a7b8c9d2",
     "name": "Stone",
-    "description": "Natural rock materials including granite, marble, and slate for premium surfaces."
+    "description": "Natural rock materials including granite, marble, and slate for premium surfaces.",
+    "imageUrl": "https://pub-8aa8b480403f4da0bac5a9e73a4cf84c.r2.dev/stone.jpg"
   },
   {
     "_id": "658af1b2c3d4e5f6a7b8c9d3",
     "name": "Wood",
-    "description": "Solid or engineered timber planks providing a classic, warm aesthetic."
+    "description": "Solid or engineered timber planks providing a classic, warm aesthetic.",
+    "imageUrl": "https://pub-8aa8b480403f4da0bac5a9e73a4cf84c.r2.dev/wood.jpg"
   },
   {
     "_id": "658af1b2c3d4e5f6a7b8c9d4",
     "name": "Mirror",
-    "description": "Reflective glass surfaces used for decorative wall panels and architectural accents."
+    "description": "Reflective glass surfaces used for decorative wall panels and architectural accents.",
+    "imageUrl": "https://pub-8aa8b480403f4da0bac5a9e73a4cf84c.r2.dev/mirror.jpg"
   },
   {
     "_id": "658af1b2c3d4e5f6a7b8c9d5",
     "name": "WPC",
-    "description": "Wood Plastic Composite flooring known for being 100% waterproof and highly durable."
+    "description": "Wood Plastic Composite flooring known for being 100% waterproof and highly durable.",
+    "imageUrl": "https://pub-8aa8b480403f4da0bac5a9e73a4cf84c.r2.dev/wpc.jpg"
   },
   {
     "_id": "658af1b2c3d4e5f6a7b8c9d6",
     "name": "Metal",
-    "description": "Industrial-grade metallic finishes and panels for modern structural or decorative use."
+    "description": "Industrial-grade metallic finishes and panels for modern structural or decorative use.",
+    "imageUrl": "https://pub-8aa8b480403f4da0bac5a9e73a4cf84c.r2.dev/metal.jpg"
   },
   {
     "_id": "658af1b2c3d4e5f6a7b8c9d7",
     "name": "No Category",
-    "description": "Unclassified items or materials pending categorization."
+    "description": "Unclassified items or materials pending categorization.",
+    "imageUrl": "https://pub-8aa8b480403f4da0bac5a9e73a4cf84c.r2.dev/placeholder-1.png"
   }
 ]

@@ -14,6 +14,8 @@ const categoryRoutes = async function (fastify: FastifyInstance) {
     },
     categoryController.create
   );
+
+  fastify.get("/", categoryController.getAllCategories);
 };
 
 export default categoryRoutes;

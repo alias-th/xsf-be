@@ -214,6 +214,7 @@ const getAllProducts = async (request: FastifyRequest, reply: FastifyReply) => {
     page?: string;
     limit?: string;
     sortBy?: string;
+    order?: "ASC" | "DESC";
   };
 
   const page = parseInt(query.page || "1");
@@ -225,7 +226,7 @@ const getAllProducts = async (request: FastifyRequest, reply: FastifyReply) => {
     const deals = await dealRepository.find();
     const [products, totalCount] = await productRepository.findAndCount({
       order: {
-        [sortBy]: "DESC",
+        [sortBy]: query.order || "DESC",
       },
       take: limit,
       skip: skip,
