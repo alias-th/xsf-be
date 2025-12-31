@@ -40,7 +40,12 @@ const saveUploadedFile = async (
 };
 
 type Options = {
-  filepaths: string[];
+  files: {
+    filename: string;
+    mimetype?: string;
+    buffer: Buffer;
+    size?: number;
+  }[];
   bucketName: string;
   publicUrl: string;
 };
@@ -49,34 +54,31 @@ const uploadToS3 = async (
   opt: Options
 ): Promise<string[]> => {
   // Upload each file to S3
-  for (const filepath of opt.filepaths) {
-    const fileStream = fs.createReadStream(
-      path.join(process.cwd(), "uploads", filepath)
-    );
-
-    const contentType = mime.lookup(filepath) || "application/octet-stream";
+  const uploadedUrls: string[] = [];
+  for (const file of opt.files) {
+    const contentType =
+      mime.lookup(file.filename) || "application/octet-stream";
+    const original = file.filename || "file";
+    const safe = path.basename(original);
+    const uniq = `${Date.now()}-${uuidv4()}-${safe}`;
 
     const uploadParams = {
       Bucket: opt.bucketName,
-      Key: filepath,
-      Body: fileStream,
+      Key: uniq,
+      Body: file.buffer,
       ContentType: contentType,
     };
 
     try {
       await s3Client.send(new PutObjectCommand(uploadParams));
+      uploadedUrls.push(uniq);
     } catch (error) {
       console.error("Error uploading to S3:", error);
       throw error;
     }
   }
 
-  // Remove local files after upload
-  await unlinkLocalFiles({ filepaths: opt.filepaths });
-
-  // Get urls of uploaded files
-  const uploadedUrls = opt.filepaths.map((filepath) => filepath);
-
   return uploadedUrls;
 };
+
 export { saveUploadedFile, uploadToS3, unlinkLocalFiles };

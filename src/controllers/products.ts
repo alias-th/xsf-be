@@ -85,21 +85,11 @@ const addProduct = async (
     }
   }
 
-  // Save uploaded files
-  let savedFiles: string[] = [];
-  try {
-    savedFiles = await saveUploadedFile(files, reply);
-  } catch (error) {
-    request.log.error({ error }, "Error saving uploaded files");
-    reply.code(500).send({ error: "Internal server error." });
-    return;
-  }
-
   // Upload to s3
   let uploadedUrls: string[] = [];
   try {
     uploadedUrls = await uploadToS3(request.server.s3, {
-      filepaths: savedFiles,
+      files: files,
       bucketName: request.server.config.S3_BUCKET_NAME,
       publicUrl: request.server.config.S3_PUBLIC_URL,
     });
