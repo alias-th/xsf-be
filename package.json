@@ -24,9 +24,11 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node index.js",
+    "start": "node dist/index.js",
     "dev": "nodemon --watch src --ext ts,js,json --exec \"tsx src/index.ts\"",
     "migrate:down": "tsx src/migration/down.ts",
-    "migrate:up": "tsx src/migration/up.ts"
+    "migrate:up": "tsx src/migration/up.ts",
+    "docker:build": "docker build -t xsf-be .",
+    "docker:run": "docker run -p 8000:8000 xsf-be"
   }
 }

@@ -33,7 +33,7 @@ const start = async () => {
 
   const app = await buildApp();
   const port = Number(app.config.PORT);
-  app.listen({ port }, function (err) {
+  app.listen({ port, host: "0.0.0.0" }, function (err) {
     if (err) {
       app.log.error(err);
       process.exit(1);
