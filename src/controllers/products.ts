@@ -216,6 +216,7 @@ const getAllProductsV2 = async (
     limit?: string;
     sortBy?: string;
     order?: "ASC" | "DESC";
+    search?: string;
   };
 
   const page = parseInt(query.page || "1");

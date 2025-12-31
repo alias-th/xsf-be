@@ -98,11 +98,21 @@ export const getAllProductsV3 = (query: {
   limit: number;
   sortBy?: string;
   order?: "ASC" | "DESC";
+  search?: string;
 }) => {
   const skip = (query.page - 1) * query.limit;
   const sortBy = query.sortBy || "createdAt";
   const sortOrder = query.order === "DESC" ? 1 : -1;
   return [
+    {
+      $match: {
+        $or: [
+          // case-insensitive ไม่สนตัวพิมพ์เล็ก-ใหญ่
+          { name: { $regex: query.search, $options: "i" } },
+          { code: { $regex: query.search, $options: "i" } },
+        ],
+      },
+    },
     {
       $lookup: {
         from: "product_popularity",
@@ -209,6 +219,8 @@ export const getAllProductsV3 = (query: {
             },
           },
         },
+        createdAt: 1,
+        updatedAt: 1,
       },
     },
     {
