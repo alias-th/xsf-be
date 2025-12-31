@@ -1,23 +1,29 @@
 [
   {
     "_id": "658af1b2c3d4e5f6a1b2c3d4",
-    "product_ids": ["658af2b2c3d4e5f6a7b8c001", "658af2b2c3d4e5f6a7b8c002"],
     "name": "xclusive-deal",
     "description": "New year sale",
-    "discount_percentage": 25
+    "products": [
+      {
+        "product_id": "658af2b2c3d4e5f6a7b8c001",
+        "discount_percentage": 15
+      },
+      {
+        "product_id": "658af2b2c3d4e5f6a7b8c002",
+        "discount_percentage": 25
+      }
+    ]
   },
   {
     "_id": "658af1b2c3d4e5f6a1b2c3d5",
-    "product_ids": [],
     "name": "Early Bird Special",
     "description": "Get the new Smart Home Hub at a fraction of the price.",
-    "discount_percentage": 15
+    "products": []
   },
   {
     "_id": "658af1b2c3d4e5f6a1b2c3d6",
-    "product_ids": [],
     "name": "Gaming Bundle Save",
     "description": "Buy the console and get 3 selected titles at half price.",
-    "discount_percentage": 50
+    "products": []
   }
 ]

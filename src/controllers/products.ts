@@ -222,7 +222,7 @@ const getAllProductsV2 = async (
   const limit = parseInt(query.limit || "10");
 
   const productRepository = appDataSource.getMongoRepository(Product);
-  const aggregateFunc = Pipelines.getAllProductsV2({ ...query, page, limit });
+  const aggregateFunc = Pipelines.getAllProductsV3({ ...query, page, limit });
 
   try {
     const [result] = await productRepository.aggregate(aggregateFunc).toArray();
@@ -247,69 +247,69 @@ const getAllProductsV2 = async (
   }
 };
 
-const getAllProducts = async (request: FastifyRequest, reply: FastifyReply) => {
-  const productRepository = appDataSource.getMongoRepository(Product);
-  const dealRepository = appDataSource.getMongoRepository(Deal);
+// const getAllProducts = async (request: FastifyRequest, reply: FastifyReply) => {
+//   const productRepository = appDataSource.getMongoRepository(Product);
+//   const dealRepository = appDataSource.getMongoRepository(Deal);
 
-  const query = request.query as {
-    page?: string;
-    limit?: string;
-    sortBy?: string;
-    order?: "ASC" | "DESC";
-  };
+//   const query = request.query as {
+//     page?: string;
+//     limit?: string;
+//     sortBy?: string;
+//     order?: "ASC" | "DESC";
+//   };
 
-  const page = parseInt(query.page || "1");
-  const limit = parseInt(query.limit || "10");
-  const skip = (page - 1) * limit;
-  const sortBy = query.sortBy || "createdAt";
+//   const page = parseInt(query.page || "1");
+//   const limit = parseInt(query.limit || "10");
+//   const skip = (page - 1) * limit;
+//   const sortBy = query.sortBy || "createdAt";
 
-  try {
-    const deals = await dealRepository.find();
-    const [products, totalCount] = await productRepository.findAndCount({
-      order: {
-        [sortBy]: query.order || "DESC",
-      },
-      take: limit,
-      skip: skip,
-    });
+//   try {
+//     const deals = await dealRepository.find();
+//     const [products, totalCount] = await productRepository.findAndCount({
+//       order: {
+//         [sortBy]: query.order || "DESC",
+//       },
+//       take: limit,
+//       skip: skip,
+//     });
 
-    const totalPages = Math.ceil(totalCount / limit);
+//     const totalPages = Math.ceil(totalCount / limit);
 
-    const productsWithDeal = products.map((product) => {
-      const activeDeal = deals
-        .filter((deal) => {
-          return deal.product_ids
-            .map((i) => i.toString())
-            .includes(product.id.toString());
-        })
-        .map((deal) => {
-          return {
-            id: deal.id,
-            name: deal.name,
-            description: deal.description,
-            discount_percentage: deal.discount_percentage,
-          };
-        });
+//     const productsWithDeal = products.map((product) => {
+//       const activeDeal = deals
+//         .filter((deal) => {
+//           return deal.product_ids
+//             .map((i) => i.toString())
+//             .includes(product.id.toString());
+//         })
+//         .map((deal) => {
+//           return {
+//             id: deal.id,
+//             name: deal.name,
+//             description: deal.description,
+//             discount_percentage: deal.discount_percentage,
+//           };
+//         });
 
-      return { ...product, deal: activeDeal };
-    });
+//       return { ...product, deal: activeDeal };
+//     });
 
-    reply.code(200).send({
-      data: productsWithDeal,
-      pagination: {
-        total_items: totalCount,
-        total_pages: totalPages,
-        current_page: page,
-        per_page: limit,
-        has_next_page: page < totalPages,
-        has_previous_page: page > 1,
-      },
-    });
-  } catch (error) {
-    request.log.error(error);
-    reply.code(500).send({ error: "Internal server error" });
-  }
-};
+//     reply.code(200).send({
+//       data: productsWithDeal,
+//       pagination: {
+//         total_items: totalCount,
+//         total_pages: totalPages,
+//         current_page: page,
+//         per_page: limit,
+//         has_next_page: page < totalPages,
+//         has_previous_page: page > 1,
+//       },
+//     });
+//   } catch (error) {
+//     request.log.error(error);
+//     reply.code(500).send({ error: "Internal server error" });
+//   }
+// };
 
 const updateProduct = async (
   request: FastifyRequest<{
@@ -431,7 +431,7 @@ const searchProducts = async (
 export {
   addProduct,
   getProductById,
-  getAllProducts,
+  // getAllProducts,
   getAllProductsV2,
   updateProduct,
   deleteProduct,

@@ -15,7 +15,7 @@ const dealRoute = async function (fastify: FastifyInstance) {
     dealController.create
   );
 
-  fastify.get("/exclusive", dealController.getExclusiveDealsV2);
+  fastify.get("/", dealController.getExclusiveDealsV2);
 };
 
 export default dealRoute;

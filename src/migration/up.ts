@@ -29,7 +29,10 @@ const runUpMigration = async () => {
       return {
         ...d,
         _id: new ObjectId(d._id),
-        product_ids: d.product_ids.map((id) => new ObjectId(id)),
+        products: d.products.map((p: any) => ({
+          product_id: new ObjectId(p.product_id as string),
+          discount_percentage: p.discount_percentage,
+        })),
       };
     });
     const popularityData = popularity.map((pop) => {
