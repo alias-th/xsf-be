@@ -162,9 +162,11 @@ export const getAllProductsV3 = (query: {
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
+        id: "$_id",
         name: 1,
         code: 1,
+        description: 1,
         stock_quantity: 1,
         images: 1,
         pricing: 1,
@@ -172,11 +174,13 @@ export const getAllProductsV3 = (query: {
           $ifNull: ["$view.view_count", 0],
         },
         category: {
+          id: "$category._id",
           name: "$category.name",
           imageUrl: "$category.imageUrl",
           description: "$category.description",
         },
         deal: {
+          id: "$active_deal._id",
           name: "$active_deal.name",
           // ค้นหาส่วนลดเฉพาะของสินค้าตัวนี้จากใน Array products
           discount_percentage: {
