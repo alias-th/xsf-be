@@ -121,6 +121,7 @@ const getExclusiveDealsV3 = [
       category: {
         name: "$category.name",
         imageUrl: "$category.imageUrl",
+        description: "$category.description",
       },
       deal: {
         id: "$_id",
@@ -134,6 +135,7 @@ const getExclusiveDealsV3 = [
       },
     },
   },
+  { $sort: { view: -1 } },
 ];
 
 export { getExclusiveDealsV2, getExclusiveDealsV3 };
