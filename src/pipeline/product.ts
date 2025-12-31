@@ -103,13 +103,14 @@ export const getAllProductsV3 = (query: {
   const skip = (query.page - 1) * query.limit;
   const sortBy = query.sortBy || "createdAt";
   const sortOrder = query.order === "DESC" ? 1 : -1;
+  const search = query.search || "";
   return [
     {
       $match: {
         $or: [
           // case-insensitive ไม่สนตัวพิมพ์เล็ก-ใหญ่
-          { name: { $regex: query.search, $options: "i" } },
-          { code: { $regex: query.search, $options: "i" } },
+          { name: { $regex: search, $options: "i" } },
+          { code: { $regex: search, $options: "i" } },
         ],
       },
     },
