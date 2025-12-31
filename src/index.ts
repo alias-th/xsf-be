@@ -10,9 +10,7 @@ declare module "fastify" {
     s3: S3Client;
     config: {
       PORT: string;
-      MONGODB_HOST: string;
-      MONGODB_PORT: string;
-      MONGODB_DATABASE: string;
+      MONGODB_URI: string;
       S3_ACCOUNT_ID: string;
       S3_ACCESS_KEY_ID: string;
       S3_SECRET_ACCESS_KEY: string;

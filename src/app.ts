@@ -11,18 +11,9 @@ const envOptions = {
   dotenv: true,
   schema: {
     type: "object",
-    required: ["PORT", "MONGODB_HOST", "MONGODB_PORT", "MONGODB_DATABASE"],
+    required: ["PORT", "MONGODB_URI"],
     properties: {
       PORT: {
-        type: "string",
-      },
-      MONGODB_HOST: {
-        type: "string",
-      },
-      MONGODB_PORT: {
-        type: "string",
-      },
-      MONGODB_DATABASE: {
         type: "string",
       },
       S3_ACCOUNT_ID: {
