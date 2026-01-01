@@ -30,7 +30,7 @@ const start = async () => {
   }
 
   const app = await buildApp();
-  const port = Number(app.config.PORT);
+  const port = parseInt(process.env.PORT || "8080");
   app.listen({ port, host: "0.0.0.0" }, function (err) {
     if (err) {
       app.log.error(err);
