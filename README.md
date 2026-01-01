@@ -16,6 +16,13 @@
 
 ---
 
+## Deployed
+
+- https://xsf-be.onrender.com
+- https://xsf-be-v2-1076317643220.asia-southeast1.run.app
+
+---
+
 ## DB Diagram
 
 https://dbdiagram.io/d/xsf-test-694f7dab39fa3db27b9e68a2
