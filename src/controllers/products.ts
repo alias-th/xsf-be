@@ -113,7 +113,7 @@ const addProduct = async (
   product.stock_quantity = (validatedFields.stock_quantity as number) ?? 1;
   product.pricing = {
     price_per_unit: (validatedFields.price as number) ?? 0,
-    unit_label: (validatedFields.unit_label as string) ?? "mm",
+    unit_label: (validatedFields.unit_label as string) ?? "ตร.ม.",
   };
   product.images = uploadedUrls;
   product.createdAt = new Date();

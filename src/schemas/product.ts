@@ -11,7 +11,10 @@ export const create = Joi.object().keys({
     "any.required": "code is required.",
     "string.min": "code must be at least 6 characters.",
   }),
-
+  unit_label: Joi.string().required().messages({
+    "string.empty": "unit is required.",
+    "any.required": "unit is required.",
+  }),
   price: Joi.number().positive().required().messages({
     "number.base": "price must be a number.",
     "number.positive": "price must be a positive number.",
